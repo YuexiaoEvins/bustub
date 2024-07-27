@@ -62,8 +62,10 @@ class DiskExtendibleHashTable {
    * @return true if insert succeeded, false otherwise
    */
   auto Insert(const K &key, const V &value, Transaction *transaction = nullptr) -> bool;
+  auto SplitBucket(ExtendibleHTableDirectoryPage *directory,
+                                                ExtendibleHTableBucketPage<K,V,KC> *bucket, uint32_t bucket_idx) -> bool;
 
-  /** TODO(P2): Add implementation
+      /** TODO(P2): Add implementation
    * Removes a key-value pair from the hash table.
    *
    * @param key the key to delete
@@ -72,6 +74,8 @@ class DiskExtendibleHashTable {
    * @return true if remove succeeded, false otherwise
    */
   auto Remove(const K &key, Transaction *transaction = nullptr) -> bool;
+  void TryMergeBucketRecursive(ExtendibleHTableDirectoryPage *directory,
+                   ExtendibleHTableBucketPage<K,V,KC> *bucket, uint32_t bucket_idx) const;
 
   /** TODO(P2): Add implementation
    * Get the value associated with a given key in the hash table.
@@ -133,5 +137,6 @@ class DiskExtendibleHashTable {
   uint32_t bucket_max_size_;
   page_id_t header_page_id_;
 };
+
 
 }  // namespace bustub

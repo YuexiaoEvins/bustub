@@ -32,12 +32,11 @@ auto ExtendibleHTableHeaderPage::HashToDirectoryIndex(uint32_t hash) const -> ui
 }
 
 auto ExtendibleHTableHeaderPage::GetDirectoryPageId(uint32_t directory_idx) const -> uint32_t {
-  assert(directory_idx <= max_depth_);
+  assert(directory_idx <= MaxSize());
   return directory_page_ids_[directory_idx];
 }
 
 void ExtendibleHTableHeaderPage::SetDirectoryPageId(uint32_t directory_idx, page_id_t directory_page_id) {
-  assert(directory_idx <= max_depth_);
   directory_page_ids_[directory_idx] = directory_page_id;
 }
 

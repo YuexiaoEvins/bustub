@@ -856,7 +856,7 @@ bool UnitTestOptions::MatchesFilter(const std::string& name_str,
 // suite name and the test name.
 bool UnitTestOptions::FilterMatchesTest(const std::string& test_suite_name,
                                         const std::string& test_name) {
-  // Split --gtest_filter at '-', if there is one, to separate into
+  // SplitBucket --gtest_filter at '-', if there is one, to separate into
   // positive filter and negative filter portions
   return PositiveAndNegativeUnitTestFilter(GTEST_FLAG_GET(filter))
       .MatchesTest(test_suite_name, test_name);
@@ -1548,7 +1548,7 @@ std::string CreateUnifiedDiff(const std::vector<std::string>& left,
 namespace {
 
 // The string representation of the values received in EqFailure() are already
-// escaped. Split them on escaped '\n' boundaries. Leave all other escaped
+// escaped. SplitBucket them on escaped '\n' boundaries. Leave all other escaped
 // characters the same.
 std::vector<std::string> SplitEscapedString(const std::string& str) {
   std::vector<std::string> lines;

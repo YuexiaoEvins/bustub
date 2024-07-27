@@ -54,7 +54,9 @@ auto BasicPageGuard::UpgradeWrite() -> WritePageGuard {
     return rpg;
 }
 
-ReadPageGuard::ReadPageGuard(BufferPoolManager *bpm, Page *page) {}
+ReadPageGuard::ReadPageGuard(BufferPoolManager *bpm, Page *page) {
+    guard_ = BasicPageGuard(bpm,page);
+}
 
 ReadPageGuard::ReadPageGuard(ReadPageGuard &&that) noexcept {
     this->guard_ = std::move(that.guard_);
@@ -81,7 +83,9 @@ ReadPageGuard::~ReadPageGuard() {
     this->Drop();
 }  // NOLINT
 
-WritePageGuard::WritePageGuard(BufferPoolManager *bpm, Page *page) {}
+WritePageGuard::WritePageGuard(BufferPoolManager *bpm, Page *page) {
+    guard_ = BasicPageGuard(bpm,page);
+}
 
 WritePageGuard::WritePageGuard(WritePageGuard &&that) noexcept {
     this->guard_ = std::move(that.guard_);
