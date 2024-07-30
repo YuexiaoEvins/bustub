@@ -10,6 +10,7 @@ SortExecutor::SortExecutor(ExecutorContext *exec_ctx, const SortPlanNode *plan,
 
 void SortExecutor::Init() {
   child_executor_->Init();
+  tuple_list_.clear();
 
   Tuple tmp_tuple;
   RID tmp_rid;
@@ -17,7 +18,7 @@ void SortExecutor::Init() {
     tuple_list_.push_back(tmp_tuple);
   }
 
-  auto cmp = [order_bys = plan_->GetOrderBy(),schema = GetOutputSchema()](const Tuple &a, const Tuple &b){
+  auto cmp = [order_bys = plan_->GetOrderBy(),schema = child_executor_->GetOutputSchema()](const Tuple &a, const Tuple &b){
     for (const auto &order_key :order_bys) {
       switch (order_key.first) {
         case OrderByType::INVALID:

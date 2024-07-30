@@ -7,6 +7,8 @@ TopNExecutor::TopNExecutor(ExecutorContext *exec_ctx, const TopNPlanNode *plan,
     : AbstractExecutor(exec_ctx),plan_(plan),child_executor_{std::move(child_executor)} {}
 
 void TopNExecutor::Init() {
+  child_executor_->Init();
+
   auto cmp = [order_bys = plan_->GetOrderBy(),schema = GetOutputSchema()]
       (const Tuple& a,const Tuple& b){
         for (auto order_key :order_bys) {
